@@ -1,0 +1,106 @@
+import os
+
+rootDir = 'C:/Users/pengpeng/Desktop/NEW_data_result/NEW_data_result'
+dirs = os.listdir(rootDir)
+
+i = 1
+for dir in dirs:
+    dir = rootDir + '/' + dir
+    # print(dir)
+    piclist = os.listdir(dir)
+    # total_num = len(piclist)
+
+    for pic in piclist:
+        if pic.endswith(".png"):  # 修改成你自己想要重命名的文件格式
+            old_path = os.path.join(os.path.abspath(dir), pic)
+            new_path = os.path.join(os.path.abspath(dir), str(100000 + (int(i))) + '.png')  # 修改成了1000+N这种格式
+
+            os.renames(old_path, new_path)
+            print("把原图片命名格式：" + old_path + u"转换为新图片命名格式：" + new_path)
+            i = i + 1
+
+
+import os
+import re
+import shutil
+
+def replcaeFileName(pic_path):  # 修改pic_path路径下的文件名
+    piclist = os.listdir(pic_path)
+    # total_num = len(piclist)
+
+    i = 1
+    for pic in piclist:
+        if pic.endswith(".jpg"):  # 修改成你自己想要重命名的文件格式
+            old_path = os.path.join(os.path.abspath(pic_path), pic)
+            new_path = os.path.join(os.path.abspath(pic_path), str(1000 + (int(i))) + '.jpg')  # 修改成了1000+N这种格式
+
+            os.renames(old_path, new_path)
+            print("把原图片命名格式：" + old_path + u"转换为新图片命名格式：" + new_path)
+            i = i + 1
+
+
+def replaceDirName(rootDir):  # 修改rootDir路径下的文件夹名
+    num = 0
+    dirs = os.listdir(rootDir)
+    for dir in dirs:
+        print('oldname is:' + dir)  # 输出老的名字
+
+        num = num + 1
+        temp = "%03d" % int(num)  # 主要目的是在数字统一为3位，不够的前面补0
+
+        oldname = os.path.join(rootDir, dir)  # 老文件夹的名字
+        newname = os.path.join(rootDir, temp)  # 新文件夹的名字
+
+        os.rename(oldname, newname)  # 替换
+
+def remove_file(old_path, new_path):
+    print(old_path)
+    print(new_path)
+    # result1 = os.path.splitext(file)
+    filelist = os.listdir(old_path) #列出该目录下的所有文件,listdir返回的文件列表是不包含路径的。
+    print(filelist)
+    for file in filelist:
+        src = os.path.join(old_path, file)
+        dst = os.path.join(new_path, file)
+        print('src:', src)
+        print('dst:', dst)
+        shutil.move(src, dst)
+        
+        
+if __name__ == '__main__':
+    from_path = 'C:/Users/pengpeng/Desktop/NEW_data_result/NEW_data_result/labels'
+    old_path = 'C:\\Users\\pengpeng\\Desktop\\NEW_data_result\\NEW_data_result\\train\\exp'
+    new_path = 'C:\\Users\\pengpeng\\Desktop\\NEW_data_result\\NEW_data_result\\train\\ok'
+    rootDir = 'C:/Users/pengpeng/Desktop/pythonProject1/tr'
+    replaceDirName(rootDir)
+    replcaeFileName(rootDir)
+    remove_file(old_path, new_path)
+    
+    import shutil
+import os
+
+from_path = 'C:/Users/pengpeng/Desktop/NEW_data_result/NEW_data_result/labels'
+old_path = 'C:\\Users\\pengpeng\\Desktop\\NEW_data_result\\NEW_data_result\\train\\exp'
+new_path = 'C:\\Users\\pengpeng\\Desktop\\NEW_data_result\\NEW_data_result\\train\\ok'
+
+# print(old_path)
+# print(new_path)
+filelist = os.listdir(from_path) #列出该目录下的所有文件,listdir返回的文件列表是不包含路径的。
+# print(filelist)
+
+for file in filelist:
+
+    result1 = os.path.splitext(file)
+    print(result1)
+    result1 = result1[0] + '.png'
+    # file_dir = old_path + '/' + file
+    # myfile = open(file_dir)
+    # lines = len(myfile.readlines())
+    # myfile.close()
+    # print(lines)
+    # if lines != 1:
+    src = os.path.join(old_path, result1)
+    dst = os.path.join(new_path, result1)
+    print('src:', src)
+    print('dst:', dst)
+    shutil.move(src, dst)
